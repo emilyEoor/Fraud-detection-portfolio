@@ -58,12 +58,12 @@ Feature engineering aimed to capure realistic fraud signals and handle common da
 - All three models show nearly identical ROC–AUC (≈0.887–0.888) and comparable PR–AUC (≈0.715–0.737), indicating similar overall ability to rank fraud vs. legitimate transactions. However, Logistic Regression and Decision Tree achieve higher recall (~0.70) at the cost of very low precision (~0.41–0.44). Random Forest strikes a stronger balance: it has the best overall F1 score (0.737), far higher precision (0.886), and the highest accuracy. This makes Random Forest the most practical choice for fraud detection.
 
 **5.2) Feature importance (top‑10 per model)**  
-![Top Features](Reports/TopFeatures.png)
+![Top Features](/Reports/figures/TopFeatures.png)
 
  - Across all three models, engineered fraud-rate features and simple behavioral flags dominated the top importance rankings (e.g., `transaction_description_fraud_rate`, `transaction_device_fraud_rate`, and `flag_txnloc_missing`). In contrast, raw demographic/location features such as `state` or `city` contributed little predictive power highlighting that domain-informed feature engineering (category-level fraud rates, missing-value flags, ratios) was crucial for separating fraudulent from legitimate transactions in this dataset.
 
 **5.3) ROC & PR Curves for Random Forest Test-Set**  
-![ROC & PR Curves](Reports/figures/roc_pr_curves.png)
+![ROC & PR Curves](/Reports/figures/roc_pr_curves.png)
 -  ROC–AUC shows the model separates fraud from legitimate activity well across thresholds, while PR–AUC highlights that precision–recall trade-offs are more modest.  This reflects the difficulty of catching rare fraud cases without raising false alarms.
 
 **5.4) Threshold tuning impact (F1‑optimal)**
@@ -80,7 +80,7 @@ RF comparison:
 
 
 **5.5) Confusion matrix (@ F1-optimal threshold)**  
-![Confusion Matrix – Best Model](Reports/figures/confusion_matrix_best.png)
+![ConfusionMatrix](/Reports/figures/confusion_matrix_best.png)
 
 - The results depicted in the confusion matrix reflect a strong ability to avoid false alarms (precision = 1.0), but at the cost of missing many actual fraud cases.  
 
@@ -91,7 +91,7 @@ RF comparison:
 
 - **False negatives:**
     - The model produced 1,197 false negatives (37.5% of fraud transactions). To better understand missed fraud, I compared false negatives (missed frauds) against true positives (caught frauds) on the model’s top 3 features.  
-![False Negative Trends](Reports/figures/error_analysis_tp_fn_3panel.png)
+![False Negative Trends](/Reports/figures/error_analysis_tp_fn_3panel.png)
 
     - The strongest pattern emerged on `transaction_description_fraud_rate`. Missed fraud clustered in categories with very low historical fraud rates (`transaction_description_fraud_rate ≈ 0`) indicating that fraud cases in historically “safe” categories were harder to distinguish from legitimate activity. 
     - True positives relied heavily on the “missing location” flag (`flag_txnloc_missing`), a signal unlikely to generalize to real-world data.
